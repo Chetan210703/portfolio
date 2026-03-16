@@ -23,7 +23,7 @@ export default function Footer() {
             LinkedIn
           </a>
           <a
-            href="/CHETAN_CV.pdf"
+            href="/CHETAN_CV.pdf?v=2"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-500 hover:text-pink-400 transition-colors"

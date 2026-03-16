@@ -38,7 +38,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/CHETAN_CV.pdf"
+            href="/CHETAN_CV.pdf?v=2"
             target="_blank"
             rel="noopener noreferrer"
             className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold text-sm transition-all hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]"
@@ -79,7 +79,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/CHETAN_CV.pdf"
+            href="/CHETAN_CV.pdf?v=2"
             target="_blank"
             rel="noopener noreferrer"
             className="px-5 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-lg text-center mt-2"

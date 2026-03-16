@@ -13,7 +13,7 @@ export default function About() {
           </h2>
           <p className="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
             Final-year B.Tech student specializing in{' '}
-            <span className="text-pink-400 font-medium">Backend Development</span> and building
+            <span className="text-pink-400 font-medium">FULL STACK DEVELOPMENT</span> building
             scalable web applications. Passionate about REST APIs, clean architecture, and
             turning ideas into production-ready software.
           </p>
@@ -21,7 +21,7 @@ export default function About() {
         <SectionFadeIn delay={80}>
           <div className="flex flex-wrap justify-center gap-6">
             <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500/30 hover:shadow-[0_0_20px_rgba(236,72,153,0.08)] transition-all duration-300">
-              <span className="text-slate-300">Backend Development</span>
+              <span className="text-slate-300">FULL STACK DEVELOPMENT</span>
             </div>
             <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:shadow-[0_0_20px_rgba(168,85,247,0.08)] transition-all duration-300">
               <span className="text-slate-300">Full Stack</span>
