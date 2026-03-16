@@ -1,82 +1,34 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import ParticleCanvas from './ParticleCanvas'
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center px-6 pt-20 pb-16"
+      className="min-h-screen flex items-center justify-center px-6 pt-24 pb-20 relative"
+      style={{ background: 'linear-gradient(180deg, #0a0f1a 0%, #0d1321 100%)' }}
     >
-      <div className="max-w-5xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+      <ParticleCanvas />
+
+      <div className="max-w-5xl mx-auto text-center relative z-20">
+        <p className="text-slate-400 text-sm mb-4 tracking-[0.2em] uppercase opacity-0 animate-fade-in-up font-medium">
+          Hello, I&apos;m
+        </p>
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight opacity-0 animate-fade-in-up-delay-1">
+          <span className="gradient-text">Chetan</span>
+          <span className="text-white">.</span>
+        </h1>
+        <p className="text-xl md:text-2xl text-slate-300 font-medium max-w-2xl mx-auto mb-14 opacity-0 animate-fade-in-up-delay-2">
+          I&apos;m a full stack web developer.
+        </p>
+        <a
+          href="#projects"
+          className="inline-flex items-center gap-2 px-10 py-4 border border-pink-500/60 text-pink-400 hover:bg-pink-500/10 hover:border-pink-500/80 hover:shadow-[0_0_24px_rgba(236,72,153,0.15)] transition-all duration-300 opacity-0 animate-fade-in-up-delay-3 rounded"
         >
-          <p className="text-cyan-400 font-mono text-sm mb-4 tracking-wider">
-            Hi, I&apos;m
-          </p>
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-            Chetan Singh
-          </h1>
-          <motion.p
-            className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            Final-year B.Tech student specializing in{' '}
-            <span className="text-cyan-400 font-medium">Backend Development</span>{' '}
-            and building scalable web applications
-          </motion.p>
-          <motion.div
-            className="flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <a
-              href="/CHETAN_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold rounded-lg transition-all hover:scale-105"
-            >
-              Download Resume
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-all"
-            >
-              Get in Touch
-            </a>
-            <a
-              href="https://github.com/Chetan210703"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border border-slate-600 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-400 rounded-lg transition-all"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/chetansingh210703"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border border-slate-600 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-400 rounded-lg transition-all"
-            >
-              LinkedIn
-            </a>
-          </motion.div>
-          <motion.p
-            className="mt-12 text-slate-500 text-sm max-w-xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-          >
-            Interested in backend development and learning how real-world products are built.
-            Open to SDE and IT-related opportunities.
-          </motion.p>
-        </motion.div>
+          View my work
+          <span className="text-pink-400/80">↓</span>
+        </a>
       </div>
     </section>
   )

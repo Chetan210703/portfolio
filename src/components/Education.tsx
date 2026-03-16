@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import SectionFadeIn from './SectionFadeIn'
 
 const education = [
   {
@@ -22,38 +22,31 @@ const education = [
 
 export default function Education() {
   return (
-    <section id="education" className="py-24 px-6 bg-slate-900/30">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-white mb-4">Education</h2>
+    <section id="education" className="py-28 px-6 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative">
+        <SectionFadeIn className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <span className="gradient-text">Education</span>
+          </h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
             Academic background in engineering and technology
           </p>
-        </motion.div>
+        </SectionFadeIn>
 
         <div className="space-y-6">
           {education.map((edu, i) => (
-            <motion.div
-              key={edu.institution}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50"
-            >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
-                <div>
-                  <h3 className="text-lg font-semibold text-white">{edu.degree}</h3>
-                  <p className="text-cyan-400">{edu.institution}</p>
+            <SectionFadeIn key={edu.institution} delay={i * 60}>
+              <div className="rounded-2xl p-6 md:p-8 bg-white/[0.02] border border-white/[0.06] hover:border-blue-500/20 hover:shadow-[0_0_40px_rgba(59,130,246,0.05)] transition-all duration-500">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{edu.degree}</h3>
+                    <p className="text-pink-400">{edu.institution}</p>
+                  </div>
+                  <span className="text-slate-500 text-sm font-mono">{edu.period}</span>
                 </div>
-                <span className="text-slate-500 text-sm font-mono">{edu.period}</span>
               </div>
-            </motion.div>
+            </SectionFadeIn>
           ))}
         </div>
       </div>

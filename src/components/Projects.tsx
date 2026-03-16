@@ -1,11 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import SectionFadeIn from './SectionFadeIn'
 
 const projects = [
   {
-    title: 'Price Tracking Web Application',
-    status: 'Ongoing',
+    title: 'Price Alert (Price Tracking)',
+    status: 'Complete',
     description: 'Web application that tracks product prices from different e-commerce websites. Scrapes, stores, and visualizes price history for informed purchase decisions.',
     tech: ['Node.js', 'Express.js', 'React', 'MongoDB', 'Cheerio', 'Axios'],
     highlights: [
@@ -44,74 +44,64 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-white mb-4">Projects</h2>
+    <section id="projects" className="py-28 px-6 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-950/5 to-transparent pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative">
+        <SectionFadeIn className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <span className="gradient-text">Projects</span>
+          </h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
             Hands-on projects demonstrating full-stack development and problem-solving
           </p>
-        </motion.div>
+        </SectionFadeIn>
 
         <div className="space-y-8">
           {projects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-cyan-500/20 transition-colors group"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-                <h3 className="text-xl font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                  {project.title}
-                </h3>
-                <span
-                  className={`text-xs px-3 py-1 rounded-full font-medium ${
-                    project.status === 'Ongoing'
-                      ? 'bg-amber-500/20 text-amber-400'
-                      : 'bg-green-500/20 text-green-400'
-                  }`}
-                >
-                  {project.status}
-                </span>
-              </div>
-              <p className="text-slate-400 mb-4">{project.description}</p>
-              <ul className="space-y-1 mb-4">
-                {project.highlights.map((h) => (
-                  <li key={h} className="flex gap-2 text-slate-300 text-sm">
-                    <span className="text-cyan-500">•</span>
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-3 py-1 text-xs rounded-full bg-slate-700/50 text-slate-300"
-                    >
-                      {t}
+            <SectionFadeIn key={project.title} delay={i * 80}>
+              <div className="group rounded-2xl p-6 md:p-8 bg-white/[0.02] border border-white/[0.06] hover:border-pink-500/25 hover:shadow-[0_0_50px_rgba(236,72,153,0.06)] transition-all duration-500">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                  <h3 className="text-xl font-semibold text-white group-hover:text-pink-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  {project.status === 'Complete' && (
+                    <span className="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      Completed
                     </span>
-                  ))}
+                  )}
                 </div>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center gap-1"
-                >
-                  View on GitHub →
-                </a>
+                <p className="text-slate-400 mb-4">{project.description}</p>
+                <ul className="space-y-1 mb-4">
+                  {project.highlights.map((h) => (
+                    <li key={h} className="flex gap-2 text-slate-300 text-sm">
+                      <span className="text-pink-500">•</span>
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 text-xs rounded-lg bg-white/[0.06] text-slate-300 border border-white/[0.04]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1 transition-colors"
+                  >
+                    View on GitHub →
+                  </a>
+                </div>
               </div>
-            </motion.div>
+            </SectionFadeIn>
           ))}
         </div>
       </div>

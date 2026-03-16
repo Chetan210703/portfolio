@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import SectionFadeIn from './SectionFadeIn'
 
 const skillCategories = [
   {
@@ -48,74 +48,50 @@ const skillCategories = [
   },
 ]
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-}
-
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-white mb-4">Technical Skills</h2>
+    <section id="skills" className="py-28 px-6 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative">
+        <SectionFadeIn className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Technical <span className="gradient-text">Skills</span>
+          </h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
-            A breakdown of my technical expertise — organized for easy reference during interviews.
-            Hover over skills for more detail on what I know.
+            A breakdown of my technical expertise — organized for easy reference.
           </p>
-        </motion.div>
+        </SectionFadeIn>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-50px' }}
-          className="space-y-12"
-        >
-          {skillCategories.map((category) => (
-            <motion.div
-              key={category.title}
-              variants={item}
-              className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50"
-            >
-              <h3 className="text-xl font-semibold text-cyan-400 mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-cyan-500 rounded" />
-                {category.title}
-              </h3>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {category.skills.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="group p-4 rounded-lg bg-slate-900/50 border border-slate-700/30 hover:border-cyan-500/30 transition-all"
-                  >
-                    <div className="flex justify-between items-start mb-1">
-                      <span className="font-medium text-white">{skill.name}</span>
-                      <span className="text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400">
-                        {skill.level}
-                      </span>
+        <div className="space-y-10">
+          {skillCategories.map((category, i) => (
+            <SectionFadeIn key={category.title} delay={i * 60}>
+              <div className="rounded-2xl p-6 md:p-8 bg-white/[0.02] border border-white/[0.06] hover:border-pink-500/20 hover:shadow-[0_0_40px_rgba(236,72,153,0.05)] transition-all duration-500">
+                <h3 className="text-xl font-semibold text-pink-400 mb-6 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full" />
+                  {category.title}
+                </h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {category.skills.map((skill) => (
+                    <div
+                      key={skill.name}
+                      className="group p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-purple-500/20 hover:bg-white/[0.04] transition-all duration-300"
+                    >
+                      <div className="flex justify-between items-start mb-1">
+                        <span className="font-medium text-white">{skill.name}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-md bg-pink-500/20 text-pink-400">
+                          {skill.level}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-500 group-hover:text-slate-400 transition-colors">
+                        {skill.desc}
+                      </p>
                     </div>
-                    <p className="text-sm text-slate-500 group-hover:text-slate-400 transition-colors">
-                      {skill.desc}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </motion.div>
+            </SectionFadeIn>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

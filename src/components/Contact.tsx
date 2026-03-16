@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import SectionFadeIn from './SectionFadeIn'
 
 const links = [
   {
@@ -47,55 +47,47 @@ const links = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-6 bg-slate-900/30">
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold text-white mb-4">Get in Touch</h2>
+    <section id="contact" className="py-28 px-6 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-950/5 to-transparent pointer-events-none" />
+      <div className="max-w-4xl mx-auto relative">
+        <SectionFadeIn className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Get in <span className="gradient-text">Touch</span>
+          </h2>
           <p className="text-slate-400">
             Open to SDE and IT-related opportunities. Feel free to reach out!
           </p>
-        </motion.div>
+        </SectionFadeIn>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 gap-4"
-        >
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith('http') ? '_blank' : undefined}
-              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="flex items-center gap-4 p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-cyan-500/30 hover:bg-slate-800/80 transition-all group"
-            >
-              <div className="p-2 rounded-lg bg-cyan-500/20 text-cyan-400 group-hover:bg-cyan-500/30 transition-colors">
-                {link.icon}
-              </div>
-              <div>
-                <p className="text-slate-500 text-sm">{link.label}</p>
-                <p className="text-white font-medium group-hover:text-cyan-400 transition-colors">
-                  {link.value}
-                </p>
-              </div>
-            </a>
-          ))}
-        </motion.div>
+        <SectionFadeIn delay={80}>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {links.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="flex items-center gap-4 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-pink-500/25 hover:shadow-[0_0_40px_rgba(236,72,153,0.06)] transition-all duration-500 group"
+              >
+                <div className="p-3 rounded-xl bg-gradient-to-br from-pink-500/20 to-purple-500/20 text-pink-400 group-hover:from-pink-500/30 group-hover:to-purple-500/30 transition-all">
+                  {link.icon}
+                </div>
+                <div>
+                  <p className="text-slate-500 text-sm">{link.label}</p>
+                  <p className="text-white font-medium group-hover:text-pink-400 transition-colors">
+                    {link.value}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </SectionFadeIn>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center text-slate-500 text-sm mt-8"
-        >
-          Based in Mumbai, India
-        </motion.p>
+        <SectionFadeIn delay={120}>
+          <p className="text-center text-slate-500 text-sm mt-10">
+            Based in Mumbai, India
+          </p>
+        </SectionFadeIn>
       </div>
     </section>
   )
