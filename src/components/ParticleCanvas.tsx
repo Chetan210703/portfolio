@@ -2,15 +2,25 @@
 
 import { useEffect, useRef } from 'react'
 
-const PARTICLE_COUNT = 75
-const CONNECTION_DISTANCE = 180
 const REPULSION_RADIUS = 80
 const REPULSION_STRENGTH = 0.02
 const ATTRACTION_RADIUS = 220
 const ATTRACTION_STRENGTH = 0.01
-const CENTER_EXCLUSION_RADIUS = 220
-const CENTER_REPULSION_STRENGTH = 0.015
+const CENTER_REPULSION_STRENGTH = 0.012
 const MOUSE_SMOOTHING = 0.12
+
+function layoutForViewport(w: number, h: number) {
+  const narrow = w < 640
+  const minDim = Math.min(w, h)
+  return {
+    particleCount: narrow ? 38 : 75,
+    connectionDistance: narrow ? 110 : 180,
+    centerExclusionRadius: Math.min(200, minDim * 0.34),
+    lineOpacityMul: narrow ? 0.65 : 1,
+    dotRadiusMul: narrow ? 0.85 : 1,
+  }
+}
+
 interface Particle {
   x: number
   y: number
@@ -21,11 +31,37 @@ interface Particle {
   radius: number
 }
 
-function initParticles(width: number, height: number): Particle[] {
+function initParticles(
+  width: number,
+  height: number,
+  count: number,
+  centerX: number,
+  centerY: number,
+  exclusionRadius: number
+): Particle[] {
   const particles: Particle[] = []
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const margin = exclusionRadius * 0.92
+  let guard = 0
+  while (particles.length < count && guard < count * 80) {
+    guard++
     const x = width * (0.05 + 0.9 * Math.random())
     const y = height * (0.05 + 0.9 * Math.random())
+    const dx = x - centerX
+    const dy = y - centerY
+    if (Math.sqrt(dx * dx + dy * dy) < margin) continue
+    particles.push({
+      x,
+      y,
+      vx: 0,
+      vy: 0,
+      baseX: x,
+      baseY: y,
+      radius: Math.random() * 1.5 + 0.8,
+    })
+  }
+  while (particles.length < count) {
+    const x = width * (0.02 + 0.96 * Math.random())
+    const y = height * (0.02 + 0.96 * Math.random())
     particles.push({
       x,
       y,
@@ -42,6 +78,7 @@ function initParticles(width: number, height: number): Particle[] {
 export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
+  const layoutRef = useRef(layoutForViewport(800, 600))
   const mouseRef = useRef({ x: -9999, y: -9999 })
   const smoothMouseRef = useRef({ x: -9999, y: -9999 })
   const rafRef = useRef<number>(0)
@@ -66,7 +103,16 @@ export default function ParticleCanvas() {
       canvas.style.width = `${w}px`
       canvas.style.height = `${h}px`
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      particlesRef.current = initParticles(w, h)
+      const layout = layoutForViewport(w, h)
+      layoutRef.current = layout
+      particlesRef.current = initParticles(
+        w,
+        h,
+        layout.particleCount,
+        w / 2,
+        h / 2,
+        layout.centerExclusionRadius
+      )
     }
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -104,8 +150,11 @@ export default function ParticleCanvas() {
         return
       }
 
-      const w = canvas.width / (window.devicePixelRatio || 1)
-      const h = canvas.height / (window.devicePixelRatio || 1)
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const w = canvas.width / dpr
+      const h = canvas.height / dpr
+      const layout = layoutRef.current
+      const exclusionR = layout.centerExclusionRadius
 
       smoothMouseRef.current.x += (mouseRef.current.x - smoothMouseRef.current.x) * MOUSE_SMOOTHING
       smoothMouseRef.current.y += (mouseRef.current.y - smoothMouseRef.current.y) * MOUSE_SMOOTHING
@@ -129,8 +178,9 @@ export default function ParticleCanvas() {
         const toCenterX = centerX - p.x
         const toCenterY = centerY - p.y
         const distToCenter = Math.sqrt(toCenterX * toCenterX + toCenterY * toCenterY)
-        if (distToCenter < CENTER_EXCLUSION_RADIUS && distToCenter > 1) {
-          const force = (1 - distToCenter / CENTER_EXCLUSION_RADIUS) * CENTER_REPULSION_STRENGTH
+        if (distToCenter < exclusionR && distToCenter > 1) {
+          const t = distToCenter / exclusionR
+          const force = (1 - t) * (1 - t) * CENTER_REPULSION_STRENGTH
           ax -= (toCenterX / distToCenter) * force
           ay -= (toCenterY / distToCenter) * force
         }
@@ -165,6 +215,8 @@ export default function ParticleCanvas() {
         p.y = Math.max(0, Math.min(h, p.y))
       }
 
+      const connDist = layout.connectionDistance
+      const lineMul = layout.lineOpacityMul
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const p1 = particles[i]
@@ -172,8 +224,8 @@ export default function ParticleCanvas() {
           const dx = p2.x - p1.x
           const dy = p2.y - p1.y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < CONNECTION_DISTANCE) {
-            const opacity = 0.15 + (1 - dist / CONNECTION_DISTANCE) * 0.25
+          if (dist < connDist) {
+            const opacity = (0.12 + (1 - dist / connDist) * 0.22) * lineMul
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
             ctx.lineTo(p2.x, p2.y)
@@ -184,11 +236,12 @@ export default function ParticleCanvas() {
         }
       }
 
+      const rMul = layout.dotRadiusMul
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(226, 232, 240, 0.6)'
+        ctx.arc(p.x, p.y, p.radius * rMul, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(226, 232, 240, 0.55)'
         ctx.fill()
       }
 
