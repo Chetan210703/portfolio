@@ -4,16 +4,18 @@ import SectionFadeIn from './SectionFadeIn'
 
 const projects = [
   {
-    title: 'Price Alert (Price Tracking)',
+    title: 'Smart Price Tracker & AI Assistant',
     status: 'Complete',
-    description: 'Web application that tracks product prices from different e-commerce websites. Scrapes, stores, and visualizes price history for informed purchase decisions.',
-    tech: ['Node.js', 'Express.js', 'React', 'MongoDB', 'Cheerio', 'Axios'],
+    description: 'An AI-powered web application that monitors e-commerce prices. It automates data extraction, sends real-time updates, and uses generative AI to analyze price histories and answer user queries.',
+    tech: ['Node.js', 'Express.js', 'React', 'MongoDB', 'Playwright', 'Gemini AI', 'Redis', 'Socket.io'],
     highlights: [
-      'Built REST APIs for price data management',
-      'Web scraping with Cheerio and Axios',
-      'Price history visualization with React',
+      'Built real-time REST APIs and WebSocket connections for instant data delivery',
+      'Automated resilient e-commerce scraping pipelines using Playwright and Node-Cron',
+      'Integrated Gemini AI for conversational history analysis and natural language Q&A',
+      'Visualized complex price trends using React and Recharts with Redis caching optimization'
     ],
-    github: 'https://github.com/Chetan210703',
+    live_link: 'https://chetan-price-alert.vercel.app/',
+    github: 'https://github.com/Chetan210703/price_alert',
   },
   {
     title: 'WhatsApp Bot Automation',
@@ -80,7 +82,7 @@ export default function Projects() {
                     </li>
                   ))}
                 </ul>
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((t) => (
                       <span
@@ -91,14 +93,31 @@ export default function Projects() {
                       </span>
                     ))}
                   </div>
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1 transition-colors"
-                  >
-                    View on GitHub →
-                  </a>
+                  
+                  {/* Action Links Container */}
+                  <div className="flex items-center gap-4 generic-links">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1 transition-colors"
+                      >
+                        View on GitHub →
+                      </a>
+                    )}
+                    
+                    {project.live_link && (
+                      <a
+                        href={project.live_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-1 transition-colors"
+                      >
+                        Live Demo →
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </SectionFadeIn>

@@ -1,13 +1,15 @@
-'use client'
+"use client";
 
-import ParticleCanvas from './ParticleCanvas'
+import ParticleCanvas from "./ParticleCanvas";
 
 export default function Hero() {
   return (
     <section
       id="hero"
       className="min-h-screen flex items-center justify-center px-6 pt-24 pb-20 relative"
-      style={{ background: 'linear-gradient(180deg, #0a0f1a 0%, #0d1321 100%)' }}
+      style={{
+        background: "linear-gradient(180deg, #0a0f1a 0%, #0d1321 100%)",
+      }}
     >
       <ParticleCanvas />
 
@@ -31,5 +33,5 @@ export default function Hero() {
         </a>
       </div>
     </section>
-  )
+  );
 }
